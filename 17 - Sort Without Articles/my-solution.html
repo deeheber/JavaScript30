@@ -43,7 +43,30 @@
   <ul id="bands"></ul>
 
 <script>
+const unorderedListEl = document.getElementById('bands');
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+function compare(a, b) {
+  //strip out a, an, and the
+  let replaceA = a.replace(/(The|A|An)\s+/, '');
+  let replaceB = b.replace(/(The|A|An)\s+/, '');
+  //sort the items
+  if(replaceA < replaceB) return -1;
+  if(replaceA > replaceB) return 1;
+  return 0;
+}
+
+function buildHTML(items) {
+  let outputHTML = '';
+  for(let i = 0; i < items.length; i++) {
+    outputHTML += '<li>' + items[i] + '</li>';
+  }
+  return outputHTML;
+}
+
+bands.sort(compare);
+unorderedListEl.innerHTML = buildHTML(bands);
+
 
 
 </script>
