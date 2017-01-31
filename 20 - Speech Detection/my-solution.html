@@ -10,8 +10,45 @@
   </div>
 
 <script>
+  // webit is for Chrome otherwise, its only currently avail in Firefox
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', e => { 
+    const transcript = Array.from(e.results)
+      .map( result => result[0] )
+      .map( result => result.transcript )
+      .join('');
+
+    p.textContent = transcript;
+
+    if(e.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
+
+    if(transcript.includes('Pizza')) {
+      console.log('🍕🍕🍕🍕🍕🍕🍕');
+    }
+
+    if(transcript.includes('get the weather')) {
+      // debounce so it only runs once
+      console.log('running an imaginary function to get the weather');
+    }
+
+    //TODO add other cool functionality with transcript.includes
+
+    console.log(transcript);
+  });
+
+  recognition.addEventListener('end', recognition.start);
+  recognition.start();
 
 </script>
 
